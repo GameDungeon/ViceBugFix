@@ -309,10 +309,6 @@ void IterativeDeepen(S_SEARCH_WORKER_DATA *workerData) {
     for( currentDepth = 1; currentDepth <= workerData->info->depth; ++currentDepth ) {
         rootDepth = currentDepth;
         bestScore = AlphaBeta(-AB_BOUND, AB_BOUND, currentDepth, workerData->pos, workerData->info, workerData->ttable, TRUE);
-
-        if(workerData->info->stopped == TRUE) {
-            break;
-        }
     
 		if(workerData->threadNumber == 0) {
             pvMoves = GetPvLine(currentDepth, workerData->pos, workerData->ttable);
@@ -324,6 +320,10 @@ void IterativeDeepen(S_SEARCH_WORKER_DATA *workerData) {
                 printf(" %s",PrMove(workerData->pos->PvArray[pvNum]));
             }
             printf("\n");
+        }
+
+		if(workerData->info->stopped == TRUE) {
+            break;
         }
     }    
 
